@@ -6,7 +6,7 @@ const Summary = () => {
       <br />
       <div className="text-justify">
         <p>
-          Hello I am Ebubeker Rexha, a 20 year old Web Developer from Albania with 2.5 years
+          A 20 year old Web Developer from Albania with 2.5 years
           of professional experience.
         </p>
       </div>

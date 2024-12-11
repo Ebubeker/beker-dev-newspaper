@@ -21,7 +21,7 @@ const Grid = () => {
             <Image
               src={EbubekerPerson}
               alt="Ebubeker"
-              className="absolute bottom-0 right-[100px] w-[300px] grayscale-[70%] max-xl:hidden"
+              className="absolute bottom-0 right-[100px] w-[120px] xl:w-[220px] 2xl:w-[300px] grayscale-[70%]"
             />
           </div>
           <Projects />
@@ -37,16 +37,18 @@ const Grid = () => {
       </div>
       <div className="max-md:hidden lg:hidden flex gap-8">
         <div className="h-fit relative w-1/2">
-          <Image
-            src={ShkoderBackground}
-            alt="Profile Pic"
-            className="w-full grayscale-[90%]"
-          />
-          <Image
-            src={EbubekerPerson}
-            alt="Ebubeker"
-            className="absolute bottom-0 right-[100px] w-[300px] grayscale-[70%] max-xl:hidden"
-          />
+          <div className="relative">
+            <Image
+              src={ShkoderBackground}
+              alt="Profile Pic"
+              className="w-full grayscale-[90%]"
+            />
+            <Image
+              src={EbubekerPerson}
+              alt="Ebubeker"
+              className="absolute bottom-0 right-[100px] w-[120px] grayscale-[70%]"
+            />
+          </div>
           <Experience />
           <OtherExperience />
         </div>
@@ -65,10 +67,10 @@ const Grid = () => {
             className="w-full grayscale-[90%]"
           />
           <Image
-            src={EbubekerPerson}
-            alt="Ebubeker"
-            className="absolute bottom-0 right-[100px] w-[300px] grayscale-[70%] max-xl:hidden"
-          />
+              src={EbubekerPerson}
+              alt="Ebubeker"
+              className="absolute bottom-0 right-[100px] w-[140px] sm:w-[200px] grayscale-[70%]"
+            />
         </div>
         <br />
         <Summary />

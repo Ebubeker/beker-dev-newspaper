@@ -3,6 +3,9 @@ import Image from "next/image";
 import Quirklr from "@/assets/images/quirklr.png";
 import NizaWebsite from "@/assets/images/niza.png";
 import VllazniaPage from "@/assets/images/vllaznia.png";
+import Github from "@/assets/svg/Github";
+import LinkIcon from "@/assets/svg/Link";
+import Link from "next/link";
 
 const Projects = () => {
   const projects = [
@@ -19,6 +22,8 @@ const Projects = () => {
       tools: ["React", "Firebase", "SWR"],
       image: Quirklr,
       alt: "Quirklr: Social Media website screenshot",
+      link: "https://quirklr.vercel.app/",
+      github: "https://github.com/Ebubeker/quirklr",
     },
     {
       title: "NIZA company website: part of work",
@@ -34,19 +39,22 @@ const Projects = () => {
       tools: ["React", "Tailwind", "SWR"],
       image: NizaWebsite,
       alt: "NIZA company website: part of work screenshot",
+      link: "https://niza.io/",
     },
     {
       title: "Vllaznia Unofficial Website",
       description: (
         <>
-          This website was done before some years, still when <b>Next JS</b>{" "}
-          was not as popular as today. I used a <b>CMS</b> to handle the matches
+          This website was done before some years, still when <b>Next JS</b> was
+          not as popular as today. I used a <b>CMS</b> to handle the matches
           that my hometown used to play.
         </>
       ),
       tools: ["React", "Firebase", "SWR"],
       image: VllazniaPage,
       alt: "Vllaznia Unofficial Website screenshot",
+      link: "https://vllaznia-unofficial-website.vercel.app/",
+      github: "https://github.com/Ebubeker/vllazniaUnofficialWebsite",
     },
   ];
 
@@ -62,27 +70,38 @@ const Projects = () => {
         {projects.map((project, index) => (
           <div
             key={index}
-            className="flex max-xl:flex-col-reverse gap-4 justify-between items-start border-b-2 border-black/20 pb-4"
+            className="flex max-xl:flex-col-reverse gap-4 justify-between items-start border-b-2 border-black/20 pb-4 group cursor-pointer"
           >
             <div className="xl:w-7/12">
               <p className="font-[600] text-xl">{project.title}</p>
               <p className="text-sm mb-2">{project.description}</p>
               <div className="flex xl:w-5/12 justify-start gap-3">
                 {project.tools.map((tool, idx) => (
-                  <div
-                    key={idx}
-                    className="text-red-500 font-bold"
-                  >
+                  <div key={idx} className="text-red-500 font-bold">
                     {tool}
                   </div>
                 ))}
               </div>
             </div>
-            <Image
-              src={project.image}
-              alt={project.alt}
-              className="w-full xl:w-auto xl:max-h-[100px] grayscale-[90%] border border-black/10 rounded-[2px]"
-            />
+            <div className="relative">
+              <Image
+                src={project.image}
+                alt={project.alt}
+                className="w-full xl:w-auto xl:max-h-[100px] grayscale-[90%] border border-black/10 rounded-[2px]"
+              />
+              <div className="absolute top-0 left-0 w-full h-full bg-black/40 transition-all ease-in duration-150 hidden group-hover:flex justify-center items-center gap-[10px]">
+                {project.github && (
+                  <Link href={project.github}>
+                    <Github width="33px" height="33px" fill="#ffffff" />{" "}
+                  </Link>
+                )}
+                {project.link && (
+                  <Link href={project.link}>
+                    <LinkIcon width="33px" height="33px" color="#ffffff" />
+                  </Link>
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </div>
