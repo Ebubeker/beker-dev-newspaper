@@ -1,7 +1,7 @@
 import React from "react";
 import Linkedin from "@/assets/svg/Linkedin";
 import Github from "@/assets/svg/Github";
-import { getFormattedDate } from "../../lib/helpers";
+import FormattedDate from "./bodyGrid/FormattedDate";
 
 const Header = () => {
   return (
@@ -42,7 +42,7 @@ const Header = () => {
         </div>
       </div>
       <div className="border-b-2 border-black/20 mt-1 pb-1 flex justify-between max-lg:text-xs">
-        <p>{getFormattedDate()}</p>
+        <FormattedDate />
         <a href="https://www.linkedin.com/in/ebubeker-rexha-3528bb1a2">
           linkedin/ebubeker-rexha
         </a>
