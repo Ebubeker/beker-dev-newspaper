@@ -3,12 +3,12 @@ import React from "react";
 const Skills = () => {
   return (
     <>
-      <p className="font-[600] text-3xl flex items-center gap-2">
+      <h2 className="font-[600] text-3xl flex items-center gap-2">
         My skillset and languages
-      </p>
-      <p className="mt-2 mb-6">
+      </h2>
+      <h3 className="mt-2 mb-6">
         Here is a list of my strongest programming languages.
-      </p>
+      </h3>
       <div>
         <div className="bg-black/80 py-3 flex justify-center font-bold text-white">
           <p>Programming Languages</p>

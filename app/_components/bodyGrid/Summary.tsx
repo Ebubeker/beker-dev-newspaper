@@ -2,13 +2,13 @@
 const Summary = () => {
   return (
     <>
-      <p className="font-[600] text-4xl">Hello I am Ebubeker Rexha</p>
+      <h2 className="font-[600] text-4xl">Hello I am Ebubeker Rexha</h2>
       <br />
       <div className="text-justify">
-        <p>
+        <h1>
           A 20 year old Web Developer from Albania with 2.5 years
           of professional experience.
-        </p>
+        </h1>
       </div>
     </>
   );

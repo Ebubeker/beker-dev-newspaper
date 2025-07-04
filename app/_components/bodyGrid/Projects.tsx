@@ -60,12 +60,12 @@ const Projects = () => {
 
   return (
     <div className="mt-8">
-      <p className="font-[600] text-4xl">My Projects</p>
-      <p className="mt-2">
+      <h2 className="font-[600] text-4xl">My Projects</h2>
+      <h3 className="mt-2">
         Here are some of my recent projects that I have done both in my work and
         personally. I have tried to use the latest technologies to match the
         current web development trends.
-      </p>
+      </h3>
       <div className="flex flex-col gap-4 mt-6">
         {projects.map((project, index) => (
           <div
