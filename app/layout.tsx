@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "BekerDev | Portfolio",
     description: "A 20-year-old Web Developer from Albania with 2.5 years of professional experience, skilled in building modern web applications using React.js, Next.js, Vue.js, Node.js, and Python.",
-    url: "https://example.com",
+    url: "https://beker.dev",
     siteName: "BekerDev",
     images: [
       {
