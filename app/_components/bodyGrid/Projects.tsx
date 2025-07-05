@@ -3,6 +3,7 @@ import Image from "next/image";
 import Quirklr from "@/assets/images/quirklr.png";
 import NizaWebsite from "@/assets/images/niza.png";
 import VllazniaPage from "@/assets/images/vllaznia.png";
+import Subdivide from "@/assets/images/subdivide.png";
 import Github from "@/assets/svg/Github";
 import LinkIcon from "@/assets/svg/Link";
 import Link from "next/link";
@@ -42,19 +43,18 @@ const Projects = () => {
       link: "https://niza.io/",
     },
     {
-      title: "Vllaznia Unofficial Website",
+      title: "Subdivide Company page",
       description: (
         <>
-          This website was done before some years, still when <b>Next JS</b> was
-          not as popular as today. I used a <b>CMS</b> to handle the matches
-          that my hometown used to play.
+          This is the official page of the startup which was done in the last
+          months. I have done it using Next JS to make it more performant in
+          speed and SEO.
         </>
       ),
-      tools: ["React", "Firebase", "SWR"],
-      image: VllazniaPage,
-      alt: "Vllaznia Unofficial Website screenshot",
-      link: "https://vllaznia-unofficial-website.vercel.app/",
-      github: "https://github.com/Ebubeker/vllazniaUnofficialWebsite",
+      tools: ["Next JS"],
+      image: Subdivide,
+      alt: "Subdivide Company page",
+      link: "https://subdivide.co",
     },
   ];
 
