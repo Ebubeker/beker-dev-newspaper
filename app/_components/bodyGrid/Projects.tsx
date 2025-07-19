@@ -1,11 +1,9 @@
-import React from "react";
-import Image from "next/image";
-import Quirklr from "@/assets/images/quirklr.png";
 import NizaWebsite from "@/assets/images/niza.png";
-import VllazniaPage from "@/assets/images/vllaznia.png";
+import Quirklr from "@/assets/images/quirklr.png";
 import Subdivide from "@/assets/images/subdivide.png";
 import Github from "@/assets/svg/Github";
 import LinkIcon from "@/assets/svg/Link";
+import Image from "next/image";
 import Link from "next/link";
 
 const Projects = () => {

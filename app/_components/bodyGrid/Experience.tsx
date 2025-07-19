@@ -1,4 +1,3 @@
-import NizaTwoImage from "@/assets/images/niza-2.png";
 import NizaImage from "@/assets/images/niza.png";
 import Plan4BetterImage from "@/assets/images/plan4better.jpg";
 import SubdivideImage from "@/assets/images/subdivide.png";
