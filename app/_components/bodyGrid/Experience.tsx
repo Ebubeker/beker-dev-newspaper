@@ -55,7 +55,7 @@ const Experience = () => {
         <Image
           src={SubdivideImage}
           alt="Niza Global company"
-          className="grayscale-[90%]"
+          className="grayscale-[70%]"
         />
       </div>
     </div>

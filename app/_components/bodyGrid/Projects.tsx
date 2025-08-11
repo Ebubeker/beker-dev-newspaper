@@ -1,6 +1,6 @@
-import NizaWebsite from "@/assets/images/niza.png";
-import Quirklr from "@/assets/images/quirklr.png";
-import Subdivide from "@/assets/images/subdivide.png";
+import NizaWebsite from "@/assets/images/niza-global.png";
+import Subdivide from "@/assets/images/subdivide.co.png";
+import TripFlip from "@/assets/images/tripflip.png";
 import Github from "@/assets/svg/Github";
 import LinkIcon from "@/assets/svg/Link";
 import Image from "next/image";
@@ -9,50 +9,53 @@ import Link from "next/link";
 const Projects = () => {
   const projects = [
     {
-      title: "Quirklr: Social Media website",
+      title: "TripFlip: Plan your trip with the help of AI",
       description: (
         <>
-          Social Media website done as a school project. It consists of 2
-          versions, the first had basic implementations and the second version
-          has more advanced features. Since it was for school I was forced to
-          use <b>React</b> without <b>typescript</b> and <b>tailwind</b>.
+          Trip planning app which uses AI to suggest flights and trips at a
+          destination based on users budget, interests and travel styles. The
+          app is 95% finished but due to lack of marketing budget I was unable
+          to continue it.
+          {/* <b>React Native</b> without <b>typescript</b> and <b>tailwind</b>. */}
         </>
       ),
-      tools: ["React", "Firebase", "SWR"],
-      image: Quirklr,
-      alt: "Quirklr: Social Media website screenshot",
-      link: "https://quirklr.vercel.app/",
-      github: "https://github.com/Ebubeker/quirklr",
+      tools: ["React Native", "Typescript", "Node JS", "Tailwind"],
+      image: TripFlip,
+      alt: "TripFlip: Plan your trip with the help of AI",
+      link: "https://tripflip.site/",
+      github: "https://github.com/Ebubeker/tripflip-app",
     },
     {
-      title: "NIZA company website: part of work",
+      title: "NIZA company website",
       description: (
         <>
           I have built this project while I was working for Niza Global. I used{" "}
-          <b>React JS</b> combined with <b>tailwind</b> as a styling library. I
+          <b>Next JS</b> combined with <b>tailwind</b> as a styling library. I
           have also used translations to make the website language selectable.
           Considering the large amount of content it had, the company website
           performed well.
         </>
       ),
-      tools: ["React", "Tailwind", "SWR"],
+      tools: ["Next JS", "Typescript", "Tailwind", "SWR"],
       image: NizaWebsite,
       alt: "NIZA company website: part of work screenshot",
       link: "https://niza.io/",
     },
     {
-      title: "Subdivide Company page",
+      title: "Subdivide Web App",
       description: (
         <>
-          This is the official page of the startup which was done in the last
-          months. I have done it using Next JS to make it more performant in
-          speed and SEO.
+          This is the subdivide web app which automates the process of dealing
+          with data, cleaning, preparing, analyzing and AI feedback for further
+          quality improvement. It was discontinued as a startup due to lack of
+          time and priority. But with this idea we were nominated as top 5 ACTI
+          YOUTH startups in Albania.
         </>
       ),
-      tools: ["Next JS"],
+      tools: ["Next JS", "Tailwind", "Supabase", "FastAPI", "SWR"],
       image: Subdivide,
-      alt: "Subdivide Company page",
-      link: "https://subdivide.co",
+      alt: "Subdivide Web App",
+      link: "https://app.subdivide.co/",
     },
   ];
 
@@ -73,9 +76,9 @@ const Projects = () => {
             <div className="xl:w-7/12">
               <p className="font-[600] text-xl">{project.title}</p>
               <p className="text-sm mb-2">{project.description}</p>
-              <div className="flex xl:w-5/12 justify-start gap-3">
+              <div className="flex w-full justify-start gap-3">
                 {project.tools.map((tool, idx) => (
-                  <div key={idx} className="text-red-500 font-bold">
+                  <div key={idx} className="text-red-500 font-bold text-sm">
                     {tool}
                   </div>
                 ))}
@@ -85,7 +88,7 @@ const Projects = () => {
               <Image
                 src={project.image}
                 alt={project.alt}
-                className="w-full xl:w-auto xl:max-h-[100px] grayscale-[90%] border border-black/10 rounded-[2px]"
+                className="w-full xl:w-auto xl:max-h-[120px] grayscale-[90%] border border-black/10 rounded-[2px]"
               />
               <div className="absolute top-0 left-0 w-full h-full bg-black/40 transition-all ease-in duration-150 hidden group-hover:flex justify-center items-center gap-[10px]">
                 {project.github && (
