@@ -1,0 +1,85 @@
+# BekerDev
+
+> BekerDev is a one-person web and app development studio run by Ebubeker Rexha.
+> Landing pages shipped in a day, MVPs in a week, and long-form web apps built end-to-end
+> in modern React, Next.js, and TypeScript, all done by one developer with no team or handoffs.
+
+## About
+
+BekerDev is a solo web and app development studio based in Shkodër, Albania. It is run
+by Ebubeker Rexha, who has worked as a front-end developer at Plan4Better and Niza Global,
+and co-founded the data-automation startup Subdivide (top-5 at ACTI YOUTH, Albania).
+
+Every engagement, from design and build to deployment and ongoing support, is done by
+one person. There is no team, no junior devs behind the scenes, no agency overhead.
+
+## Services
+
+- **Landing Page in a Day**: a production-ready landing page designed, built, and
+  deployed in a single working day. Fixed scope, fixed price.
+- **MVP Sprint**: a minimum viable product built end-to-end in a 3–5 day compressed
+  sprint. Includes auth, database, core flows, and deployment.
+- **Web App Development**: longer, more ambitious full-stack web applications using
+  React, Next.js, TypeScript, Supabase, and FastAPI where needed.
+- **Dev Partnership**: a monthly retainer for existing products that need reliable
+  ongoing development capacity.
+
+All service inquiries go through the contact form at /contact. Prices are quoted per
+project after a short discovery conversation.
+
+## Tech stack
+
+React, Next.js, TypeScript, Tailwind CSS, Node.js, Vue.js, Supabase, Postgres, FastAPI,
+Python. Deployment on Vercel by default.
+
+## Selected work
+
+Recent projects, each designed, built, and deployed in a single working day:
+
+- **Jarna** (/work/jarna): traditional Albanian restaurant landing page in Tiranë
+- **Trattoria Venezia** (/work/trattoria-venezia): Italian seafood restaurant landing page in Shkodër
+- **Eja** (/work/eja): landing page for the first Italian restaurant in Tirana
+- **ATY** (/work/aty): rooftop restaurant and gallery landing page in Tirana
+- **Gjeli i Pazarit** (/work/gjeli-i-pazarit): traditional Albanian tavern landing page in Tirana
+- **Niza Global** (/work/niza-global): single-day landing refresh for a multi-language crypto platform
+
+## Contact
+
+- Website: https://beker.dev
+- Email: hello@beker.dev
+- Contact form: https://beker.dev/contact
+- LinkedIn: https://www.linkedin.com/in/ebubeker-rexha-3528bb1a2/
+- GitHub: https://github.com/Ebubeker
+
+## Key pages
+
+- https://beker.dev/ : Landing page with services, process, selected work, FAQ
+- https://beker.dev/work : Full case study archive
+- https://beker.dev/work/jarna : Jarna case study
+- https://beker.dev/work/trattoria-venezia : Trattoria Venezia case study
+- https://beker.dev/work/eja : Eja case study
+- https://beker.dev/work/aty : ATY case study
+- https://beker.dev/work/gjeli-i-pazarit : Gjeli i Pazarit case study
+- https://beker.dev/work/niza-global : Niza Global case study
+- https://beker.dev/blog : Journal index
+- https://beker.dev/blog/mvp-cost-2026 : How much does an MVP cost in 2026?
+- https://beker.dev/blog/landing-page-cost-2026 : How much does a landing page cost in 2026?
+- https://beker.dev/blog/how-long-landing-page-takes : How long does it take to build a landing page? An honest timeline
+- https://beker.dev/blog/nextjs-vs-wordpress-startup : Next.js vs WordPress for a startup marketing site
+- https://beker.dev/blog/landing-page-vs-mvp : Landing page vs MVP, what do you actually need to launch?
+- https://beker.dev/blog/pre-ship-checklist : The one-page pre-ship checklist I run before every launch
+- https://beker.dev/blog/how-to-ship-a-landing-page-in-a-day : How I ship production landing pages in one working day
+- https://beker.dev/blog/stopped-using-figma-landing-pages : Why I stopped designing landing pages in Figma
+- https://beker.dev/blog/restaurant-landing-page-essentials : The 9 things every restaurant landing page actually needs
+- https://beker.dev/blog/saas-landing-page-sections : SaaS landing page, the 7 sections that actually convert
+- https://beker.dev/blog/freelancer-vs-agency-first-website : Freelancer vs agency for your first website
+- https://beker.dev/blog/supabase-vs-firebase-2026 : Supabase vs Firebase in 2026, which should you start with?
+- https://beker.dev/blog/how-to-write-product-brief : How to write a product brief your developer will actually read
+- https://beker.dev/blog/tailwind-css-for-founders : Tailwind CSS for founders, why your developer keeps recommending it
+- https://beker.dev/blog/real-cost-of-wix-site : The real cost of a 'free' Wix site for your business
+- https://beker.dev/blog/albanian-restaurant-portfolio-lessons : 5 Albanian restaurant sites, the patterns that actually worked
+- https://beker.dev/blog/when-you-need-a-real-website : When a landing page isn't enough, 4 signs you need a real website
+- https://beker.dev/blog/validate-startup-idea-weekend : How to validate a startup idea in one weekend without writing code
+- https://beker.dev/blog/high-converting-landing-page-anatomy : The anatomy of a landing page that converts at 20%+
+- https://beker.dev/blog/contact-form-design : Why your contact form should be the best-designed part of your site
+- https://beker.dev/contact : Project inquiry form

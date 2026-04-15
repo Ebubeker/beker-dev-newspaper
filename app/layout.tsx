@@ -1,34 +1,78 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import "@/styles/fonts.css";
+import { site } from "@/content/site";
 import Header from "./_components/Header";
-import Footer from "./_components/Footer";
+import MegaFooter from "./_components/sections/MegaFooter";
+import SiteJsonLd from "./_components/SiteJsonLd";
 
 export const metadata: Metadata = {
-  title: "BekerDev | Full-Stack Developer - React, Next.js, Python",
-  description:
-    "A 20-year-old Web Developer from Albania with 3 years of experience, skilled in modern web apps using React.js, Next.js, Vue.js, Node.js, and in data science.",
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} · ${site.shortTagline}`,
+    template: `%s · ${site.name}`,
+  },
+  description: site.description,
+  keywords: [
+    "web development",
+    "app development",
+    "landing page",
+    "MVP development",
+    "Next.js developer",
+    "React developer",
+    "freelance developer",
+    "solo developer",
+    "BekerDev",
+    "Ebubeker Rexha",
+  ],
+  authors: [{ name: site.founder.name, url: site.social.linkedin }],
+  creator: site.founder.name,
+  publisher: site.name,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "BekerDev | Full-Stack Developer - React, Next.js, Python",
-    description: "A 20-year-old Web Developer from Albania with 3 years of experience, skilled in modern web apps using React.js, Next.js, Vue.js, Node.js, and in data science.",
-    url: "https://beker.dev",
-    siteName: "BekerDev",
+    title: `${site.name} · ${site.shortTagline}`,
+    description: site.description,
+    url: site.url,
+    siteName: site.name,
+    locale: site.locale,
+    type: "website",
     images: [
       {
-        url: "https://beker.dev/assets/home.png",
+        url: site.ogImage,
         width: 1200,
         height: 630,
-        alt: "BekerDev",
+        alt: site.name,
       },
     ],
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BekerDev | Full-Stack Developer - React, Next.js, Python",
-    description: "A 20-year-old Web Developer from Albania with 3 years of experience, skilled in modern web apps using React.js, Next.js, Vue.js, Node.js, and in data science.",
-    images: ["https://beker.dev/assets/home.png"],
+    title: `${site.name} · ${site.shortTagline}`,
+    description: site.description,
+    images: [site.ogImage],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  category: "technology",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -39,11 +83,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className={`antialiased px-4`}>
+        <SiteJsonLd />
+        <div className="antialiased px-4">
           <Header />
           {children}
         </div>
-        <Footer />
+        <MegaFooter />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
