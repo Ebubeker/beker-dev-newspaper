@@ -24,7 +24,7 @@ export const site = {
     name: "Ebubeker Rexha",
   },
   contact: {
-    email: "hello@beker.dev",
+    email: "rexha@beker.dev",
     /** Path without locale prefix. Wrap with `withLocale(locale)` when rendering. */
     inquiries: "/contact",
   },
