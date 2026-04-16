@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getProjectBySlug } from "@/content/projects";
 import { site } from "@/content/site";
+import { defaultLocale, isLocale } from "@/i18n/config";
 
 export const runtime = "edge";
 export const alt = "BekerDev case study";
@@ -10,9 +11,10 @@ export const contentType = "image/png";
 export default async function OpengraphImage({
   params,
 }: {
-  params: { slug: string };
+  params: { locale: string; slug: string };
 }) {
-  const project = getProjectBySlug(params.slug);
+  const locale = isLocale(params.locale) ? params.locale : defaultLocale;
+  const project = getProjectBySlug(params.slug, locale);
   const title = project?.title ?? site.name;
   const kicker = project?.kicker ?? "BekerDev";
   const year = project?.year ?? "";

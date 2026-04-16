@@ -1,0 +1,168 @@
+import type { Dictionary } from "./en";
+
+const fr: Dictionary = {
+  header: {
+    since: "Depuis",
+    studioTop: "AGEN",
+    studioTopRed: "CE",
+    studioBottom: "STUDIO WEB SOLO",
+    homeAriaLabel: "accueil",
+  },
+  nav: {
+    primaryAriaLabel: "Principale",
+    work: "Projets",
+    services: "Services",
+    journal: "Journal",
+    contact: "Contact",
+    blogEnHint: "(EN)",
+  },
+  languageSwitcher: {
+    ariaLabel: "Langue",
+  },
+  hero: {
+    kicker: "Vol. I · The BekerDev Herald · Studio web en solo",
+    headlineLine1: "Sites web",
+    headlineLine1Cont: "et applications web,",
+    headlineShipped: "livrés",
+    headlineLine2: "par un seul développeur.",
+    requestQuote: "Demander un devis",
+    seeRecentWork: "Voir les projets récents",
+    shkoderAlt: "Silhouette de Shkodër, Albanie, berceau de BekerDev",
+    founderAlt: "{founder}, fondateur de {site}",
+    founderLabel: "Fondateur",
+  },
+  trustStrip: {
+    trustedBy: "Ils m'ont fait confiance",
+    independentFounders: "+ fondateurs indépendants",
+  },
+  work: {
+    sectionLabel: "Rubrique A · À la une",
+    heading: "Projets sélectionnés.",
+    seeArchive: "Voir toutes les archives →",
+    readCaseStudy: "Lire l'étude de cas →",
+    live: "En direct ↗",
+    archiveKicker: "Les archives",
+    archiveHeading: "Projets sélectionnés, au complet.",
+    archiveSubheading:
+      "Chaque histoire livrée par BekerDev. Cliquez pour l'étude de cas complète : problème, approche, résultat.",
+    yourProjectNext: "Votre projet pourrait être le prochain.",
+    no: "N°",
+    breadcrumbHome: "Accueil",
+    breadcrumbWork: "Projets",
+    stack: "Stack :",
+    visitSite: "Visiter le site ↗",
+    source: "Code source ↗",
+    problemKicker: "Le problème",
+    problemHeading: "Ce qu'il fallait résoudre.",
+    approachKicker: "L'approche",
+    approachHeading: "Comment ça a été construit.",
+    outcomeKicker: "Le résultat",
+    outcomeHeading: "Ce qui a été livré.",
+    projectFile: "Dossier projet",
+    clientLabel: "Client",
+    roleLabel: "Rôle",
+    yearLabel: "Année",
+    highlightsLabel: "Points forts",
+    previousStory: "← Histoire précédente",
+    nextStory: "Histoire suivante →",
+    endOfArchive: "Fin des archives",
+    wantOneForProduct: "Vous en voulez un pour votre produit ?",
+  },
+  services: {
+    sectionLabel: "Rubrique B · Petites annonces",
+    heading: "Ce que je construis.",
+    intro:
+      "Quatre façons de collaborer, toutes conçues, livrées et soutenues par un seul développeur.",
+    numberPrefix: "N° 0",
+    leadStory: "Article principal",
+    bestForLabel: "Idéal pour :",
+    requestQuote: "Demander un devis",
+  },
+  process: {
+    sectionLabel: "Rubrique C · Ours",
+    heading: "Comment un numéro part à l'impression.",
+    intro:
+      "Chaque projet BekerDev passe par les quatre mêmes étapes. Rapide, transparent, sans intermédiaire entre vous et le code.",
+  },
+  about: {
+    kicker: "Éditorial",
+    heading: "Un développeur. Par choix.",
+    paragraph1:
+      "Je suis Ebubeker. Je dirige BekerDev en studio solo, non pas parce que je ne pourrais pas monter une équipe, mais parce que la plupart des problèmes que les fondateurs m'apportent n'en ont pas besoin. Ils ont besoin d'un produit qui fonctionne, livré rapidement, par quelqu'un qui se soucie vraiment de savoir s'il fonctionne.",
+    paragraph2:
+      "Avant cela, j'ai construit des front-ends chez {plan4better} et {niza}, et j'ai cofondé {subdivide}, une startup d'automatisation des données arrivée dans le top 5 d'ACTI YOUTH en Albanie. Donc « solo » ne veut pas dire « débutant ». Ça veut dire aucun passage de relais, aucune surprise de dev junior, et une seule personne responsable du résultat.",
+    paragraph3:
+      "Si c'est le genre de partenariat que vous voulez pour votre prochaine réalisation, c'est le genre de partenariat que BekerDev vend.",
+    editorLabel: "Rédacteur",
+    founderAlt: "{founder}, fondateur de {site}",
+    startProject: "Démarrer un projet →",
+    linkedin: "LinkedIn ↗",
+  },
+  testimonials: {
+    sectionLabel: "Rubrique D · Courrier des lecteurs",
+    placeholderQuote: "Votre témoignage ici.",
+    placeholderAttribution: "Un vrai client, bientôt.",
+    heading: "Ce que disent les clients.",
+  },
+  faq: {
+    sectionLabel: "Rubrique E · Questions/Réponses",
+    heading: "Questions fréquentes.",
+  },
+  finalCta: {
+    kicker: "Arrêt des presses · Édition tardive",
+    headlineLine1: "Un projet en tête ?",
+    headlineLine2: "Livrons-le.",
+    body:
+      "Dites-moi ce que vous construisez, quand vous en avez besoin, et je reviens avec un vrai devis en moins d'une journée.",
+    requestQuote: "Demander un devis →",
+  },
+  footer: {
+    sectionsLabel: "Rubriques",
+    servicesLabel: "Services",
+    elsewhereLabel: "Ailleurs",
+    thePaperLabel: "Le journal",
+    basedIn: "Basé à {city}, {country}",
+    rightsReserved: "Tous droits réservés.",
+    shippedByOne: "Livré par un seul développeur.",
+  },
+  contact: {
+    kicker: "Courrier des lecteurs",
+    heading: "Démarrer un projet.",
+    subheading:
+      "Dites-moi ce que vous construisez, à peu près quand vous en avez besoin, et tout ce qui peut m'aider à le cadrer. Je reviens avec des conseils honnêtes et un vrai devis, généralement sous 24 heures.",
+    orDirectly: "Ou, directement",
+    emailLabel: "E-mail",
+    linkedinLabel: "LinkedIn",
+    linkedinHandle: "in/ebubeker-rexha ↗",
+    responseTimeLabel: "Délai de réponse",
+    responseTimeValue: "Sous une journée, à chaque fois.",
+    timezoneLabel: "Fuseau horaire",
+    timezoneValue: "{tz}, compatible asynchrone",
+    breadcrumbContact: "Contact",
+    form: {
+      nameLabel: "Votre nom",
+      namePlaceholder: "Jeanne Fondatrice",
+      emailLabel: "E-mail",
+      emailPlaceholder: "jeanne@entreprise.com",
+      serviceLabel: "Service",
+      servicePlaceholder: "Sélectionnez un service…",
+      serviceNotSure: "Pas encore sûr",
+      budgetLabel: "Budget (optionnel)",
+      budgetPlaceholder: "ex. €2k–5k",
+      messageLabel: "Que construisez-vous ?",
+      messagePlaceholder:
+        "Une phrase ou deux sur ce dont vous avez besoin et quand. Je reviens avec des conseils honnêtes et un vrai devis.",
+      submit: "Envoyer le message →",
+      sending: "Envoi en cours…",
+      successDefault: "Merci ! Message reçu. Je reviens vers vous sous une journée.",
+      errorMissingFields: "Veuillez renseigner votre nom, votre e-mail et un court message.",
+      errorInvalidEmail: "Cette adresse e-mail ne semble pas valide. Pourriez-vous la vérifier ?",
+      errorSendFailed:
+        "Un problème est survenu lors de l'envoi de votre message. Veuillez réessayer ou m'écrire directement.",
+      errorNotWiredUp:
+        "Le formulaire de contact n'est pas encore branché. Écrivez-moi directement à {email}.",
+    },
+  },
+};
+
+export default fr;

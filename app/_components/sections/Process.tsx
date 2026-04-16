@@ -1,6 +1,15 @@
-import { processSteps } from "@/content/process";
+import { getProcessSteps } from "@/content/process";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionary";
 
-const Process = () => {
+/**
+ * "The Masthead". The four-step production rhythm of every BekerDev
+ * project, rendered as a four-up grid of process cards.
+ */
+const Process = ({ locale }: { locale: Locale }) => {
+  const dict = getDictionary(locale);
+  const processSteps = getProcessSteps(locale);
+
   return (
     <section
       id="process"
@@ -10,18 +19,17 @@ const Process = () => {
       <div className="flex items-end justify-between gap-4 mb-10 flex-wrap">
         <div>
           <p className="pirateOne uppercase tracking-[0.25em] text-xs md:text-sm text-black/60">
-            Section C · The Masthead
+            {dict.process.sectionLabel}
           </p>
           <h2
             id="process-headline"
             className="unifrakturmaguntia text-5xl md:text-6xl lg:text-7xl leading-none mt-2"
           >
-            How an issue goes to press.
+            {dict.process.heading}
           </h2>
         </div>
         <p className="max-w-md text-base md:text-lg text-balance">
-          Every BekerDev project runs through the same four steps. Fast,
-          transparent, and with no middle management between you and the code.
+          {dict.process.intro}
         </p>
       </div>
 

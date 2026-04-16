@@ -1,25 +1,73 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-import { projects } from "@/content/projects";
-import { site } from "@/content/site";
+import { getProjects } from "@/content/projects";
+import { site, withLocale } from "@/content/site";
+import {
+  defaultLocale,
+  isLocale,
+  locales,
+  localeOgLocale,
+  type Locale,
+} from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionary";
 
-export const metadata: Metadata = {
-  title: "Work",
-  description:
-    "The BekerDev archive of selected case studies, covering web and app work shipped by Ebubeker Rexha.",
-  alternates: { canonical: "/work" },
-  openGraph: {
-    title: `Work · ${site.name}`,
-    description:
-      "The BekerDev archive of selected case studies, covering web and app work shipped by Ebubeker Rexha.",
-    url: `${site.url}/work`,
-    type: "website",
-  },
-};
+type Params = { locale: string };
 
-export default function WorkIndexPage() {
+export function generateStaticParams(): Params[] {
+  return locales.map((locale) => ({ locale }));
+}
+
+export function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Metadata {
+  if (!isLocale(params.locale)) return {};
+  const locale = params.locale;
+  const dict = getDictionary(locale);
+  const canonicalPath = withLocale("/work", locale);
+  const canonicalUrl = `${site.url}${canonicalPath}`;
+
+  const languageAlternates: Record<string, string> = {};
+  for (const l of locales) {
+    languageAlternates[l] = `${site.url}${withLocale("/work", l)}`;
+  }
+  languageAlternates["x-default"] = `${site.url}${withLocale("/work", defaultLocale)}`;
+
+  const description = dict.work.archiveSubheading;
+
+  return {
+    title: dict.nav.work,
+    description,
+    alternates: {
+      canonical: canonicalPath,
+      languages: languageAlternates,
+    },
+    openGraph: {
+      title: `${dict.nav.work} · ${site.name}`,
+      description,
+      url: canonicalUrl,
+      siteName: site.name,
+      locale: localeOgLocale[locale],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${dict.nav.work} · ${site.name}`,
+      description,
+    },
+  };
+}
+
+export default function WorkIndexPage({ params }: { params: Params }) {
+  if (!isLocale(params.locale)) notFound();
+  const locale = params.locale as Locale;
+  const dict = getDictionary(locale);
+  const projects = getProjects(locale);
+
   return (
     <main className="py-10">
       {/* Breadcrumb */}
@@ -27,24 +75,23 @@ export default function WorkIndexPage() {
         aria-label="Breadcrumb"
         className="pirateOne uppercase tracking-[0.2em] text-xs md:text-sm border-b-2 border-black/20 pb-3 mb-8 flex gap-3"
       >
-        <Link href="/" className="hover:text-red-500">
-          Home
+        <Link href={withLocale("/", locale)} className="hover:text-red-500">
+          {dict.work.breadcrumbHome}
         </Link>
         <span aria-hidden>/</span>
-        <span className="text-black/60">Work</span>
+        <span className="text-black/60">{dict.work.breadcrumbWork}</span>
       </nav>
 
       {/* Masthead */}
       <header className="border-b-2 border-black/80 pb-10 mb-10">
         <p className="pirateOne uppercase tracking-[0.25em] text-xs md:text-sm text-black/60">
-          The Archive
+          {dict.work.archiveKicker}
         </p>
         <h1 className="unifrakturmaguntia text-6xl md:text-8xl lg:text-[120px] leading-[0.95] mt-3 text-balance">
-          Selected work, in full.
+          {dict.work.archiveHeading}
         </h1>
         <p className="mt-6 text-lg md:text-xl max-w-2xl leading-relaxed text-balance">
-          Every story shipped by BekerDev. Click through for the full case
-          study: problem, approach, outcome.
+          {dict.work.archiveSubheading}
         </p>
       </header>
 
@@ -56,7 +103,7 @@ export default function WorkIndexPage() {
             className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-8 lg:gap-12 pb-12 border-b-2 border-black/20"
           >
             <Link
-              href={`/work/${project.slug}`}
+              href={withLocale(`/work/${project.slug}`, locale)}
               className="block relative overflow-hidden border-2 border-black/80 bg-black group"
             >
               <Image
@@ -68,13 +115,18 @@ export default function WorkIndexPage() {
 
             <div className="flex flex-col">
               <div className="flex items-center gap-3 text-xs pirateOne uppercase tracking-[0.2em] text-black/60 mb-3">
-                <span>No. 0{index + 1}</span>
+                <span>
+                  {dict.work.no} 0{index + 1}
+                </span>
                 <span aria-hidden>·</span>
                 <span>{project.kicker}</span>
                 <span aria-hidden>·</span>
                 <span>{project.year}</span>
               </div>
-              <Link href={`/work/${project.slug}`} className="group">
+              <Link
+                href={withLocale(`/work/${project.slug}`, locale)}
+                className="group"
+              >
                 <h2 className="unifrakturmaguntia text-5xl md:text-6xl lg:text-7xl leading-[0.95] text-balance group-hover:text-red-500 transition-colors">
                   {project.title}
                 </h2>
@@ -94,10 +146,10 @@ export default function WorkIndexPage() {
               </div>
               <div className="mt-auto pt-6">
                 <Link
-                  href={`/work/${project.slug}`}
+                  href={withLocale(`/work/${project.slug}`, locale)}
                   className="pirateOne text-base md:text-lg border-b-2 border-black hover:border-red-500 hover:text-red-500 pb-0.5 transition-colors"
                 >
-                  Read case study →
+                  {dict.work.readCaseStudy}
                 </Link>
               </div>
             </div>
@@ -107,14 +159,14 @@ export default function WorkIndexPage() {
 
       <div className="text-center py-16">
         <h2 className="unifrakturmaguntia text-4xl md:text-5xl leading-tight text-balance">
-          Your project could be next.
+          {dict.work.yourProjectNext}
         </h2>
         <div className="mt-8 flex justify-center">
           <Link
-            href="/contact"
+            href={withLocale("/contact", locale)}
             className="inline-flex items-center gap-3 bg-black text-white px-8 py-4 text-lg pirateOne hover:bg-red-500 transition-colors"
           >
-            Request a quote →
+            {dict.hero.requestQuote} →
           </Link>
         </div>
       </div>

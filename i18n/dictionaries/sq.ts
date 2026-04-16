@@ -1,0 +1,168 @@
+import type { Dictionary } from "./en";
+
+const sq: Dictionary = {
+  header: {
+    since: "Që nga",
+    studioTop: "AGJEN",
+    studioTopRed: "CI",
+    studioBottom: "STUDIO WEB SOLO",
+    homeAriaLabel: "faqja kryesore",
+  },
+  nav: {
+    primaryAriaLabel: "Kryesore",
+    work: "Puna",
+    services: "Shërbimet",
+    journal: "Ditari",
+    contact: "Kontakt",
+    blogEnHint: "(EN)",
+  },
+  languageSwitcher: {
+    ariaLabel: "Gjuha",
+  },
+  hero: {
+    kicker: "Vëll. I · The BekerDev Herald · Studio web një-personëshe",
+    headlineLine1: "Faqe",
+    headlineLine1Cont: "dhe aplikacione web,",
+    headlineShipped: "të dorëzuara",
+    headlineLine2: "nga një zhvillues.",
+    requestQuote: "Kërko një ofertë",
+    seeRecentWork: "Shiko punët e fundit",
+    shkoderAlt: "Silueta e Shkodrës, Shqipëri, shtëpia e BekerDev",
+    founderAlt: "{founder}, themeluesi i {site}",
+    founderLabel: "Themeluesi",
+  },
+  trustStrip: {
+    trustedBy: "I besuar nga",
+    independentFounders: "+ themelues të pavarur",
+  },
+  work: {
+    sectionLabel: "Seksioni A · Rubrikat kryesore",
+    heading: "Punë të përzgjedhura.",
+    seeArchive: "Shih arkivin e plotë →",
+    readCaseStudy: "Lexo rastin →",
+    live: "Drejtpërdrejt ↗",
+    archiveKicker: "Arkivi",
+    archiveHeading: "Punë të përzgjedhura, plotësisht.",
+    archiveSubheading:
+      "Çdo histori e dorëzuar nga BekerDev. Kliko për studimin e plotë: problem, qasje, rezultat.",
+    yourProjectNext: "Projekti juaj mund të jetë i radhës.",
+    no: "Nr.",
+    breadcrumbHome: "Kryefaqja",
+    breadcrumbWork: "Puna",
+    stack: "Stack-u:",
+    visitSite: "Vizito faqen ↗",
+    source: "Kodi burim ↗",
+    problemKicker: "Problemi",
+    problemHeading: "Çfarë duhej zgjidhur.",
+    approachKicker: "Qasja",
+    approachHeading: "Si u ndërtua.",
+    outcomeKicker: "Rezultati",
+    outcomeHeading: "Çfarë u dorëzua.",
+    projectFile: "Dosja e projektit",
+    clientLabel: "Klienti",
+    roleLabel: "Roli",
+    yearLabel: "Viti",
+    highlightsLabel: "Pikat kryesore",
+    previousStory: "← Historia e mëparshme",
+    nextStory: "Historia tjetër →",
+    endOfArchive: "Fundi i arkivit",
+    wantOneForProduct: "Dëshiron një të tillë për produktin tënd?",
+  },
+  services: {
+    sectionLabel: "Seksioni B · Njoftime",
+    heading: "Çfarë ndërtoj.",
+    intro:
+      "Katër mënyra për të punuar bashkë, të gjitha të ndërtuara, të dorëzuara dhe të mbështetura nga një zhvillues i vetëm.",
+    numberPrefix: "Nr. 0",
+    leadStory: "Kryesorja",
+    bestForLabel: "Ideal për:",
+    requestQuote: "Kërko një ofertë",
+  },
+  process: {
+    sectionLabel: "Seksioni C · Masthead-i",
+    heading: "Si një numër shkon në shtyp.",
+    intro:
+      "Çdo projekt BekerDev kalon nëpër të njëjtat katër hapa. I shpejtë, transparent, pa asnjë menaxhim të ndërmjetëm mes teje dhe kodit.",
+  },
+  about: {
+    kicker: "Letra e redaktorit",
+    heading: "Një zhvillues. Me qëllim.",
+    paragraph1:
+      "Jam Ebubeker. E drejtoj BekerDev si një studio një-personëshe, jo sepse nuk do të mund të krijoja një ekip, por sepse shumica e problemeve që më sjellin themeluesit nuk kërkojnë një të tillë. Kanë nevojë për një produkt funksional, të dorëzuar shpejt, nga dikush që vërtet interesohet nëse funksionon.",
+    paragraph2:
+      "Para kësaj, kam ndërtuar front-ends te {plan4better} dhe {niza}, dhe kam bashkëthemeluar {subdivide}, një startup për automatizim të të dhënave që arriti top-5 në ACTI YOUTH në Shqipëri. Pra, \"solo\" nuk do të thotë \"i ri\". Do të thotë pa kalime, pa surpriza nga junior-dev, dhe një person që mban përgjegjësi për rezultatin.",
+    paragraph3:
+      "Nëse ky është lloji i partneritetit që dëshiron për ndërtimin tënd të radhës, ky është lloji i partneritetit që shet BekerDev.",
+    editorLabel: "Redaktori",
+    founderAlt: "{founder}, themeluesi i {site}",
+    startProject: "Fillo një projekt →",
+    linkedin: "LinkedIn ↗",
+  },
+  testimonials: {
+    sectionLabel: "Seksioni D · Letra për redaktorin",
+    placeholderQuote: "Dëshmia jote shkon këtu.",
+    placeholderAttribution: "Një klient i vërtetë, së shpejti.",
+    heading: "Çfarë thonë klientët.",
+  },
+  faq: {
+    sectionLabel: "Seksioni E · Pyetje dhe përgjigje",
+    heading: "Pyetjet më të shpeshta.",
+  },
+  finalCta: {
+    kicker: "Ndalo shtypin · Edicion i vonshëm",
+    headlineLine1: "Ke një projekt?",
+    headlineLine2: "Le ta dorëzojmë.",
+    body:
+      "Më trego çfarë po ndërton, kur të nevojitet, dhe do të të kthehem me një ofertë të vërtetë brenda një dite.",
+    requestQuote: "Kërko një ofertë →",
+  },
+  footer: {
+    sectionsLabel: "Seksionet",
+    servicesLabel: "Shërbimet",
+    elsewhereLabel: "Diku tjetër",
+    thePaperLabel: "Gazeta",
+    basedIn: "Me bazë në {city}, {country}",
+    rightsReserved: "Të gjitha të drejtat e rezervuara.",
+    shippedByOne: "Dorëzuar nga një zhvillues.",
+  },
+  contact: {
+    kicker: "Letra për redaktorin",
+    heading: "Fillo një projekt.",
+    subheading:
+      "Më trego çfarë po ndërton, afërsisht kur të nevojitet, dhe gjithçka që mund të më ndihmojë ta vlerësoj. Do të kthehem me këshilla të ndershme dhe një ofertë të vërtetë, zakonisht brenda 24 orëve.",
+    orDirectly: "Ose, drejtpërdrejt",
+    emailLabel: "Email",
+    linkedinLabel: "LinkedIn",
+    linkedinHandle: "in/ebubeker-rexha ↗",
+    responseTimeLabel: "Koha e përgjigjes",
+    responseTimeValue: "Brenda një dite, çdo herë.",
+    timezoneLabel: "Zona kohore",
+    timezoneValue: "{tz}, miqësore me punën asinkrone",
+    breadcrumbContact: "Kontakt",
+    form: {
+      nameLabel: "Emri yt",
+      namePlaceholder: "Anisa Themeluesja",
+      emailLabel: "Email",
+      emailPlaceholder: "anisa@kompania.com",
+      serviceLabel: "Shërbimi",
+      servicePlaceholder: "Zgjidh një shërbim…",
+      serviceNotSure: "Ende pa vendosur",
+      budgetLabel: "Buxheti (opsional)",
+      budgetPlaceholder: "p.sh. €2k–5k",
+      messageLabel: "Çfarë po ndërton?",
+      messagePlaceholder:
+        "Një fjali ose dy për atë që të nevojitet dhe kur. Do të kthehem me këshilla të ndershme dhe një ofertë të vërtetë.",
+      submit: "Dërgo mesazhin →",
+      sending: "Duke dërguar…",
+      successDefault: "Faleminderit! Mesazhi u mor. Do të të kthehem brenda një dite.",
+      errorMissingFields: "Ju lutem plotëso emrin, email-in dhe një mesazh të shkurtër.",
+      errorInvalidEmail: "Adresa e email-it nuk duket e vlefshme. A mund ta kontrollosh përsëri?",
+      errorSendFailed:
+        "Diçka shkoi keq gjatë dërgimit. Provo përsëri ose më dërgo një email drejtpërdrejt.",
+      errorNotWiredUp:
+        "Formulari i kontaktit nuk është konfiguruar ende. Të lutem më dërgo email drejtpërdrejt te {email}.",
+    },
+  },
+};
+
+export default sq;

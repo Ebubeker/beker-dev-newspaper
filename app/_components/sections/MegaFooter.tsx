@@ -1,13 +1,27 @@
 import Link from "next/link";
-import { site } from "@/content/site";
+import { getSiteMeta, site, withLocale } from "@/content/site";
+import { getServices } from "@/content/services";
+import { interpolate, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionary";
+
+type NavKey = keyof Dictionary["nav"];
 
 /**
  * The oversized typographic footer. Ample-inspired full-width wordmark that
  * says "this is the paper you're reading," with a compact sitemap strip
  * above it.
  */
-const MegaFooter = () => {
+const MegaFooter = ({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+}) => {
   const year = new Date().getFullYear();
+  const meta = getSiteMeta(locale);
+  const services = getServices(locale);
+  const servicesHref = withLocale("/#services", locale);
 
   return (
     <footer className="mt-10 bg-black text-white">
@@ -17,16 +31,46 @@ const MegaFooter = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-14">
             <div>
               <p className="pirateOne uppercase tracking-[0.2em] text-xs text-white/50 mb-4">
-                Sections
+                {dict.footer.sectionsLabel}
               </p>
               <ul className="space-y-2">
-                {site.nav.map((item) => (
-                  <li key={item.href}>
+                {site.nav.map((item) => {
+                  const href = item.localized
+                    ? withLocale(item.href, locale)
+                    : item.href;
+                  const label = dict.nav[item.key as NavKey];
+                  const showEnHint =
+                    item.key === "journal" && locale !== "en";
+                  return (
+                    <li key={item.key}>
+                      <Link
+                        href={href}
+                        className="hover:text-red-400 transition-colors"
+                      >
+                        {label}
+                        {showEnHint && (
+                          <span className="ml-1 text-white/40 text-xs">
+                            {dict.nav.blogEnHint}
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <div>
+              <p className="pirateOne uppercase tracking-[0.2em] text-xs text-white/50 mb-4">
+                {dict.footer.servicesLabel}
+              </p>
+              <ul className="space-y-2">
+                {services.map((service) => (
+                  <li key={service.slug}>
                     <Link
-                      href={item.href}
+                      href={servicesHref}
                       className="hover:text-red-400 transition-colors"
                     >
-                      {item.label}
+                      {service.title}
                     </Link>
                   </li>
                 ))}
@@ -34,46 +78,7 @@ const MegaFooter = () => {
             </div>
             <div>
               <p className="pirateOne uppercase tracking-[0.2em] text-xs text-white/50 mb-4">
-                Services
-              </p>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/#services"
-                    className="hover:text-red-400 transition-colors"
-                  >
-                    Landing Page in a Day
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/#services"
-                    className="hover:text-red-400 transition-colors"
-                  >
-                    MVP Sprint
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/#services"
-                    className="hover:text-red-400 transition-colors"
-                  >
-                    Web App Development
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/#services"
-                    className="hover:text-red-400 transition-colors"
-                  >
-                    Dev Partnership
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="pirateOne uppercase tracking-[0.2em] text-xs text-white/50 mb-4">
-                Elsewhere
+                {dict.footer.elsewhereLabel}
               </p>
               <ul className="space-y-2">
                 <li>
@@ -111,11 +116,14 @@ const MegaFooter = () => {
           {/* Dateline */}
           <div className="md:text-right text-sm text-white/70 max-w-xs">
             <p className="pirateOne uppercase tracking-[0.2em] text-xs text-white/50 mb-3">
-              The paper
+              {dict.footer.thePaperLabel}
             </p>
-            <p>{site.description}</p>
+            <p>{meta.description}</p>
             <p className="mt-3 pirateOne text-xs uppercase tracking-widest">
-              Based in {site.location.city}, {site.location.country}
+              {interpolate(dict.footer.basedIn, {
+                city: site.location.city,
+                country: site.location.country,
+              })}
             </p>
           </div>
         </div>
@@ -133,10 +141,10 @@ const MegaFooter = () => {
 
       <div className="px-6 md:px-10 py-4 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/60">
         <p>
-          © {year} {site.name}. All rights reserved.
+          © {year} {site.name}. {dict.footer.rightsReserved}
         </p>
         <p className="pirateOne uppercase tracking-[0.2em]">
-          Shipped by one developer.
+          {dict.footer.shippedByOne}
         </p>
       </div>
     </footer>

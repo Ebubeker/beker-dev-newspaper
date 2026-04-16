@@ -6,15 +6,30 @@ import { notFound } from "next/navigation";
 import JsonLd from "@/app/_components/JsonLd";
 import {
   getAdjacentProjects,
+  getAllProjectSlugs,
   getProjectBySlug,
-  projects,
 } from "@/content/projects";
-import { site } from "@/content/site";
+import { site, withLocale } from "@/content/site";
+import {
+  defaultLocale,
+  isLocale,
+  locales,
+  localeOgLocale,
+  type Locale,
+} from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionary";
 
-type Params = { slug: string };
+type Params = { locale: string; slug: string };
 
 export function generateStaticParams(): Params[] {
-  return projects.map((p) => ({ slug: p.slug }));
+  const slugs = getAllProjectSlugs();
+  const params: Params[] = [];
+  for (const locale of locales) {
+    for (const slug of slugs) {
+      params.push({ locale, slug });
+    }
+  }
+  return params;
 }
 
 export function generateMetadata({
@@ -22,7 +37,9 @@ export function generateMetadata({
 }: {
   params: Params;
 }): Metadata {
-  const project = getProjectBySlug(params.slug);
+  if (!isLocale(params.locale)) return {};
+  const locale = params.locale;
+  const project = getProjectBySlug(params.slug, locale);
   if (!project) {
     return {
       title: "Not found",
@@ -30,18 +47,29 @@ export function generateMetadata({
     };
   }
 
-  const url = `${site.url}/work/${project.slug}`;
+  const canonicalPath = withLocale(`/work/${project.slug}`, locale);
+  const canonicalUrl = `${site.url}${canonicalPath}`;
   const description = project.summary;
+
+  const languageAlternates: Record<string, string> = {};
+  for (const l of locales) {
+    languageAlternates[l] = `${site.url}${withLocale(`/work/${project.slug}`, l)}`;
+  }
+  languageAlternates["x-default"] = `${site.url}${withLocale(`/work/${project.slug}`, defaultLocale)}`;
 
   return {
     title: project.title,
     description,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: canonicalPath,
+      languages: languageAlternates,
+    },
     openGraph: {
       title: project.title,
       description,
-      url,
+      url: canonicalUrl,
       siteName: site.name,
+      locale: localeOgLocale[locale],
       type: "article",
       images: [
         {
@@ -62,11 +90,14 @@ export function generateMetadata({
 }
 
 export default function WorkSlugPage({ params }: { params: Params }) {
-  const project = getProjectBySlug(params.slug);
+  if (!isLocale(params.locale)) notFound();
+  const locale = params.locale as Locale;
+  const dict = getDictionary(locale);
+  const project = getProjectBySlug(params.slug, locale);
   if (!project) notFound();
 
-  const { prev, next } = getAdjacentProjects(project.slug);
-  const url = `${site.url}/work/${project.slug}`;
+  const { prev, next } = getAdjacentProjects(project.slug, locale);
+  const url = `${site.url}${withLocale(`/work/${project.slug}`, locale)}`;
 
   const creativeWorkJsonLd = {
     "@context": "https://schema.org",
@@ -87,6 +118,7 @@ export default function WorkSlugPage({ params }: { params: Params }) {
     dateCreated: project.year,
     image: `${site.url}${project.image.src}`,
     keywords: project.stack.join(", "),
+    inLanguage: locale,
   };
 
   const breadcrumbJsonLd = {
@@ -96,14 +128,14 @@ export default function WorkSlugPage({ params }: { params: Params }) {
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
-        item: site.url,
+        name: dict.work.breadcrumbHome,
+        item: `${site.url}${withLocale("/", locale)}`,
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Work",
-        item: `${site.url}/work`,
+        name: dict.work.breadcrumbWork,
+        item: `${site.url}${withLocale("/work", locale)}`,
       },
       {
         "@type": "ListItem",
@@ -123,12 +155,12 @@ export default function WorkSlugPage({ params }: { params: Params }) {
         aria-label="Breadcrumb"
         className="pirateOne uppercase tracking-[0.2em] text-xs md:text-sm border-b-2 border-black/20 pb-3 mb-8 flex gap-3 flex-wrap"
       >
-        <Link href="/" className="hover:text-red-500">
-          Home
+        <Link href={withLocale("/", locale)} className="hover:text-red-500">
+          {dict.work.breadcrumbHome}
         </Link>
         <span aria-hidden>/</span>
-        <Link href="/work" className="hover:text-red-500">
-          Work
+        <Link href={withLocale("/work", locale)} className="hover:text-red-500">
+          {dict.work.breadcrumbWork}
         </Link>
         <span aria-hidden>/</span>
         <span className="text-black/60">{project.title}</span>
@@ -151,7 +183,7 @@ export default function WorkSlugPage({ params }: { params: Params }) {
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-5 text-sm md:text-base">
           <span className="pirateOne uppercase tracking-widest text-black/60">
-            Stack:
+            {dict.work.stack}
           </span>
           {project.stack.map((tech) => (
             <span key={tech} className="font-semibold text-red-500">
@@ -167,7 +199,7 @@ export default function WorkSlugPage({ params }: { params: Params }) {
               rel="noreferrer"
               className="pirateOne border-b-2 border-black hover:border-red-500 hover:text-red-500 pb-0.5"
             >
-              Visit site ↗
+              {dict.work.visitSite}
             </a>
           )}
           {project.githubUrl && (
@@ -177,7 +209,7 @@ export default function WorkSlugPage({ params }: { params: Params }) {
               rel="noreferrer"
               className="pirateOne border-b-2 border-black hover:border-red-500 hover:text-red-500 pb-0.5"
             >
-              Source ↗
+              {dict.work.source}
             </a>
           )}
         </div>
@@ -198,10 +230,10 @@ export default function WorkSlugPage({ params }: { params: Params }) {
         <div className="space-y-12">
           <section>
             <p className="pirateOne uppercase tracking-[0.25em] text-xs md:text-sm text-black/60 mb-2">
-              The problem
+              {dict.work.problemKicker}
             </p>
             <h2 className="unifrakturmaguntia text-4xl md:text-5xl leading-tight mb-5">
-              What needed solving.
+              {dict.work.problemHeading}
             </h2>
             <p className="text-base md:text-lg leading-relaxed">
               {project.body.problem}
@@ -210,10 +242,10 @@ export default function WorkSlugPage({ params }: { params: Params }) {
 
           <section>
             <p className="pirateOne uppercase tracking-[0.25em] text-xs md:text-sm text-black/60 mb-2">
-              The approach
+              {dict.work.approachKicker}
             </p>
             <h2 className="unifrakturmaguntia text-4xl md:text-5xl leading-tight mb-5">
-              How it got built.
+              {dict.work.approachHeading}
             </h2>
             <p className="text-base md:text-lg leading-relaxed">
               {project.body.approach}
@@ -222,10 +254,10 @@ export default function WorkSlugPage({ params }: { params: Params }) {
 
           <section>
             <p className="pirateOne uppercase tracking-[0.25em] text-xs md:text-sm text-black/60 mb-2">
-              The outcome
+              {dict.work.outcomeKicker}
             </p>
             <h2 className="unifrakturmaguntia text-4xl md:text-5xl leading-tight mb-5">
-              What shipped.
+              {dict.work.outcomeHeading}
             </h2>
             <p className="text-base md:text-lg leading-relaxed">
               {project.body.outcome}
@@ -236,30 +268,30 @@ export default function WorkSlugPage({ params }: { params: Params }) {
         {/* Sidebar: project facts */}
         <aside className="border-2 border-black/80 p-6 h-fit bg-white/50">
           <p className="pirateOne uppercase tracking-[0.25em] text-xs text-black/60 mb-4">
-            Project file
+            {dict.work.projectFile}
           </p>
           <dl className="space-y-4 text-sm">
             <div>
               <dt className="pirateOne uppercase tracking-widest text-black/50 text-xs">
-                Client
+                {dict.work.clientLabel}
               </dt>
               <dd className="mt-1">{project.client}</dd>
             </div>
             <div>
               <dt className="pirateOne uppercase tracking-widest text-black/50 text-xs">
-                Role
+                {dict.work.roleLabel}
               </dt>
               <dd className="mt-1">{project.role}</dd>
             </div>
             <div>
               <dt className="pirateOne uppercase tracking-widest text-black/50 text-xs">
-                Year
+                {dict.work.yearLabel}
               </dt>
               <dd className="mt-1">{project.year}</dd>
             </div>
             <div>
               <dt className="pirateOne uppercase tracking-widest text-black/50 text-xs">
-                Highlights
+                {dict.work.highlightsLabel}
               </dt>
               <dd className="mt-2">
                 <ul className="space-y-2">
@@ -285,11 +317,11 @@ export default function WorkSlugPage({ params }: { params: Params }) {
       >
         {prev ? (
           <Link
-            href={`/work/${prev.slug}`}
+            href={withLocale(`/work/${prev.slug}`, locale)}
             className="p-6 lg:p-8 md:border-r-2 border-black/30 max-md:border-b-2 hover:bg-black hover:text-white transition-colors group"
           >
             <p className="pirateOne uppercase tracking-[0.2em] text-xs text-black/60 group-hover:text-white/70">
-              ← Previous story
+              {dict.work.previousStory}
             </p>
             <p className="unifrakturmaguntia text-3xl md:text-4xl leading-tight mt-2">
               {prev.title}
@@ -298,17 +330,17 @@ export default function WorkSlugPage({ params }: { params: Params }) {
         ) : (
           <div className="p-6 lg:p-8 md:border-r-2 border-black/30 max-md:border-b-2 opacity-40">
             <p className="pirateOne uppercase tracking-[0.2em] text-xs">
-              End of archive
+              {dict.work.endOfArchive}
             </p>
           </div>
         )}
         {next ? (
           <Link
-            href={`/work/${next.slug}`}
+            href={withLocale(`/work/${next.slug}`, locale)}
             className="p-6 lg:p-8 text-right hover:bg-black hover:text-white transition-colors group"
           >
             <p className="pirateOne uppercase tracking-[0.2em] text-xs text-black/60 group-hover:text-white/70">
-              Next story →
+              {dict.work.nextStory}
             </p>
             <p className="unifrakturmaguntia text-3xl md:text-4xl leading-tight mt-2">
               {next.title}
@@ -317,7 +349,7 @@ export default function WorkSlugPage({ params }: { params: Params }) {
         ) : (
           <div className="p-6 lg:p-8 text-right opacity-40">
             <p className="pirateOne uppercase tracking-[0.2em] text-xs">
-              End of archive
+              {dict.work.endOfArchive}
             </p>
           </div>
         )}
@@ -326,14 +358,14 @@ export default function WorkSlugPage({ params }: { params: Params }) {
       {/* CTA */}
       <section className="border-t-2 border-black/80 pt-12 text-center pb-10">
         <h2 className="unifrakturmaguntia text-4xl md:text-5xl lg:text-6xl leading-tight text-balance">
-          Want one of these for your product?
+          {dict.work.wantOneForProduct}
         </h2>
         <div className="mt-8 flex justify-center">
           <Link
-            href="/contact"
+            href={withLocale("/contact", locale)}
             className="inline-flex items-center gap-3 bg-black text-white px-8 py-4 text-lg pirateOne hover:bg-red-500 transition-colors"
           >
-            Request a quote →
+            {dict.hero.requestQuote} →
           </Link>
         </div>
       </section>

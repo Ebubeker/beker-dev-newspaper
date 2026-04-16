@@ -1,13 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import EbubekerPortrait from "@/assets/images/ebubeker02.png";
-import { site } from "@/content/site";
+import { site, withLocale } from "@/content/site";
+import { interpolate, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionary";
 
 /**
  * The "Editor's letter". A founder-level trust signal that flips the
  * solo-dev objection ("but it's just one guy") into the brand promise.
  */
-const About = () => {
+const About = ({ locale }: { locale: Locale }) => {
+  const dict = getDictionary(locale);
+
+  const portraitAlt = interpolate(dict.about.founderAlt, {
+    founder: site.founder.name,
+    site: site.name,
+  });
+
+  // paragraph2 uses {plan4better} / {niza} / {subdivide} tokens that we render
+  // as red spans rather than plain text, so we split manually rather than
+  // relying on the string-based interpolate().
+  const paragraph2Tokens: Record<string, string> = {
+    plan4better: "Plan4Better",
+    niza: "Niza Global",
+    subdivide: "Subdivide",
+  };
+  const paragraph2Parts = dict.about.paragraph2.split(/\{(\w+)\}/g);
+
   return (
     <section
       id="about"
@@ -19,59 +39,61 @@ const About = () => {
           <div className="relative overflow-hidden bg-black">
             <Image
               src={EbubekerPortrait}
-              alt={`${site.founder.name}, founder of ${site.name}`}
+              alt={portraitAlt}
               className="w-full grayscale-[80%]"
             />
           </div>
           <div className="border-t border-black/30 mt-2 pt-2 flex items-center justify-between text-xs">
-            <span className="pirateOne uppercase tracking-widest">Editor</span>
+            <span className="pirateOne uppercase tracking-widest">
+              {dict.about.editorLabel}
+            </span>
             <span>{site.founder.name}</span>
           </div>
         </div>
 
         <div>
           <p className="pirateOne uppercase tracking-[0.25em] text-xs md:text-sm text-black/60">
-            Editor&rsquo;s letter
+            {dict.about.kicker}
           </p>
           <h2
             id="about-headline"
             className="unifrakturmaguntia text-5xl md:text-6xl lg:text-7xl leading-[0.95] mt-2 text-balance"
           >
-            One developer. On purpose.
+            {dict.about.heading}
           </h2>
 
           <div className="mt-6 space-y-5 text-base md:text-lg leading-relaxed max-w-2xl">
+            <p>{dict.about.paragraph1}</p>
             <p>
-              I&rsquo;m Ebubeker. I run BekerDev as a one-person studio, not
-              because I couldn&rsquo;t put together a team, but because most of
-              the problems founders bring me don&rsquo;t need one. They need a
-              working product, shipped fast, by someone who actually cares
-              whether it works.
+              {paragraph2Parts.map((part, idx) => {
+                // Even indices are literal text, odd indices are token names
+                // (due to the capturing group in the split regex).
+                if (idx % 2 === 0) {
+                  return <Fragment key={idx}>{part}</Fragment>;
+                }
+                const value = paragraph2Tokens[part];
+                if (!value) {
+                  return <Fragment key={idx}>{`{${part}}`}</Fragment>;
+                }
+                return (
+                  <span
+                    key={idx}
+                    className="text-red-500 font-semibold"
+                  >
+                    {value}
+                  </span>
+                );
+              })}
             </p>
-            <p>
-              Before this, I built front-ends at{" "}
-              <span className="text-red-500 font-semibold">Plan4Better</span>{" "}
-              and{" "}
-              <span className="text-red-500 font-semibold">Niza Global</span>,
-              and co-founded{" "}
-              <span className="text-red-500 font-semibold">Subdivide</span>, a
-              data-automation startup that got to top-5 at ACTI YOUTH in
-              Albania. So &ldquo;solo&rdquo; doesn&rsquo;t mean &ldquo;new.&rdquo;
-              It means no handoffs, no junior-dev surprises, and one person who
-              owns the outcome.
-            </p>
-            <p>
-              If that&rsquo;s the kind of partnership you want on your next
-              build, that&rsquo;s the kind of partnership BekerDev sells.
-            </p>
+            <p>{dict.about.paragraph3}</p>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
-              href="/contact"
+              href={withLocale("/contact", locale)}
               className="inline-flex items-center gap-3 bg-black text-white px-6 py-3 text-base md:text-lg pirateOne hover:bg-red-500 transition-colors"
             >
-              Start a project →
+              {dict.about.startProject}
             </Link>
             <a
               href={site.social.linkedin}
@@ -79,7 +101,7 @@ const About = () => {
               rel="noreferrer"
               className="inline-flex items-center gap-2 border-b-2 border-black hover:border-red-500 hover:text-red-500 pb-1 pirateOne text-base md:text-lg transition-colors"
             >
-              LinkedIn ↗
+              {dict.about.linkedin}
             </a>
           </div>
         </div>

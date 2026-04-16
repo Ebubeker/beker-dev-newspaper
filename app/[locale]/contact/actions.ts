@@ -3,9 +3,22 @@
 import { Resend } from "resend";
 import { site } from "@/content/site";
 
+/**
+ * Server-side state for the contact form. The action returns machine-readable
+ * status codes rather than user-facing strings; the client form maps them to
+ * localized dictionary messages so the language stays consistent with the
+ * current URL locale.
+ */
+export type ContactStatusCode =
+  | "idle"
+  | "success"
+  | "missingFields"
+  | "invalidEmail"
+  | "notWiredUp"
+  | "sendFailed";
+
 export type ContactState = {
-  status: "idle" | "success" | "error";
-  message: string;
+  code: ContactStatusCode;
 };
 
 const FROM_ADDRESS = process.env.CONTACT_FROM_EMAIL ?? "BekerDev <noreply@beker.dev>";
@@ -27,7 +40,7 @@ export async function submitContactForm(
   // Honeypot: if a bot fills this hidden field, silently "succeed".
   const honeypot = sanitize(formData.get("company_website"));
   if (honeypot) {
-    return { status: "success", message: "Thanks. I'll be in touch soon." };
+    return { code: "success" };
   }
 
   const name = sanitize(formData.get("name"), 120);
@@ -37,29 +50,17 @@ export async function submitContactForm(
   const message = sanitize(formData.get("message"), 4000);
 
   if (!name || !email || !message) {
-    return {
-      status: "error",
-      message: "Please fill in your name, email, and a short message.",
-    };
+    return { code: "missingFields" };
   }
 
   if (!isValidEmail(email)) {
-    return {
-      status: "error",
-      message: "That email address doesn't look valid. Mind double-checking?",
-    };
+    return { code: "invalidEmail" };
   }
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error("[contact] RESEND_API_KEY is not configured.");
-    return {
-      status: "error",
-      message:
-        "The contact form isn't wired up yet. Please email me directly at " +
-        site.contact.email +
-        ".",
-    };
+    return { code: "notWiredUp" };
   }
 
   const resend = new Resend(apiKey);
@@ -103,23 +104,12 @@ export async function submitContactForm(
 
     if (error) {
       console.error("[contact] Resend send error:", error);
-      return {
-        status: "error",
-        message:
-          "Something went wrong sending your message. Please try again or email me directly.",
-      };
+      return { code: "sendFailed" };
     }
 
-    return {
-      status: "success",
-      message: "Thanks! Message received. I'll be back to you within a day.",
-    };
+    return { code: "success" };
   } catch (error) {
     console.error("[contact] Unexpected error:", error);
-    return {
-      status: "error",
-      message:
-        "Something went wrong sending your message. Please try again or email me directly.",
-    };
+    return { code: "sendFailed" };
   }
 }

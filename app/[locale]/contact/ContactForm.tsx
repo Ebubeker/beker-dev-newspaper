@@ -1,11 +1,24 @@
 "use client";
 
 import { useFormState, useFormStatus } from "react-dom";
-import { submitContactForm, type ContactState } from "./actions";
+import { site } from "@/content/site";
+import { interpolate, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionary";
+import {
+  submitContactForm,
+  type ContactState,
+  type ContactStatusCode,
+} from "./actions";
 
-const initialState: ContactState = { status: "idle", message: "" };
+const initialState: ContactState = { code: "idle" };
 
-function SubmitButton() {
+function SubmitButton({
+  idle,
+  sending,
+}: {
+  idle: string;
+  sending: string;
+}) {
   const { pending } = useFormStatus();
   return (
     <button
@@ -13,7 +26,7 @@ function SubmitButton() {
       disabled={pending}
       className="inline-flex items-center gap-3 bg-black text-white px-8 py-4 text-lg pirateOne hover:bg-red-500 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
     >
-      {pending ? "Sending…" : "Send message →"}
+      {pending ? sending : idle}
     </button>
   );
 }
@@ -21,8 +34,33 @@ function SubmitButton() {
 const inputClass =
   "w-full bg-transparent border-b-2 border-black/40 focus:border-red-500 outline-none py-3 text-base md:text-lg placeholder:text-black/40 transition-colors";
 
-export default function ContactForm() {
+export default function ContactForm({ locale }: { locale: Locale }) {
+  const dict = getDictionary(locale);
+  const form = dict.contact.form;
   const [state, formAction] = useFormState(submitContactForm, initialState);
+
+  function messageFor(code: ContactStatusCode): string | null {
+    switch (code) {
+      case "success":
+        return form.successDefault;
+      case "missingFields":
+        return form.errorMissingFields;
+      case "invalidEmail":
+        return form.errorInvalidEmail;
+      case "sendFailed":
+        return form.errorSendFailed;
+      case "notWiredUp":
+        return interpolate(form.errorNotWiredUp, {
+          email: site.contact.email,
+        });
+      default:
+        return null;
+    }
+  }
+
+  const statusMessage = messageFor(state.code);
+  const isSuccess = state.code === "success";
+  const isError = statusMessage !== null && !isSuccess;
 
   return (
     <form action={formAction} className="space-y-8 max-w-2xl" noValidate>
@@ -42,27 +80,27 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <label className="block">
           <span className="pirateOne uppercase tracking-[0.2em] text-xs text-black/60">
-            Your name
+            {form.nameLabel}
           </span>
           <input
             type="text"
             name="name"
             required
             autoComplete="name"
-            placeholder="Jane Founder"
+            placeholder={form.namePlaceholder}
             className={inputClass}
           />
         </label>
         <label className="block">
           <span className="pirateOne uppercase tracking-[0.2em] text-xs text-black/60">
-            Email
+            {form.emailLabel}
           </span>
           <input
             type="email"
             name="email"
             required
             autoComplete="email"
-            placeholder="jane@company.com"
+            placeholder={form.emailPlaceholder}
             className={inputClass}
           />
         </label>
@@ -71,25 +109,25 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <label className="block">
           <span className="pirateOne uppercase tracking-[0.2em] text-xs text-black/60">
-            Service
+            {form.serviceLabel}
           </span>
           <select name="service" className={`${inputClass} appearance-none`}>
-            <option value="">Select a service…</option>
+            <option value="">{form.servicePlaceholder}</option>
             <option value="Landing Page in a Day">Landing Page in a Day</option>
             <option value="MVP Sprint">MVP Sprint</option>
             <option value="Web App Development">Web App Development</option>
             <option value="Dev Partnership">Dev Partnership</option>
-            <option value="Not sure yet">Not sure yet</option>
+            <option value="Not sure yet">{form.serviceNotSure}</option>
           </select>
         </label>
         <label className="block">
           <span className="pirateOne uppercase tracking-[0.2em] text-xs text-black/60">
-            Budget (optional)
+            {form.budgetLabel}
           </span>
           <input
             type="text"
             name="budget"
-            placeholder="e.g. €2k–5k"
+            placeholder={form.budgetPlaceholder}
             className={inputClass}
           />
         </label>
@@ -97,30 +135,27 @@ export default function ContactForm() {
 
       <label className="block">
         <span className="pirateOne uppercase tracking-[0.2em] text-xs text-black/60">
-          What are you building?
+          {form.messageLabel}
         </span>
         <textarea
           name="message"
           required
           rows={6}
-          placeholder="A sentence or two on what you need and when. I'll come back with honest advice and a real quote."
+          placeholder={form.messagePlaceholder}
           className={`${inputClass} resize-y`}
         />
       </label>
 
       <div className="flex flex-wrap items-center gap-6">
-        <SubmitButton />
-        {state.status === "success" && (
-          <p
-            role="status"
-            className="pirateOne text-base text-black"
-          >
-            ✓ {state.message}
+        <SubmitButton idle={form.submit} sending={form.sending} />
+        {isSuccess && (
+          <p role="status" className="pirateOne text-base text-black">
+            ✓ {statusMessage}
           </p>
         )}
-        {state.status === "error" && (
+        {isError && (
           <p role="alert" className="pirateOne text-base text-red-500">
-            ✗ {state.message}
+            ✗ {statusMessage}
           </p>
         )}
       </div>

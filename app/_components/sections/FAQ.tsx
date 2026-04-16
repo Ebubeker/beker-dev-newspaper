@@ -1,6 +1,15 @@
-import { faqs } from "@/content/faqs";
+import { getFaqs } from "@/content/faqs";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionary";
 
-const FAQ = () => {
+/**
+ * "Q&A Column". Collapsible FAQ list, seeded from the localized faqs
+ * content and matching the global FAQPage JSON-LD in SiteJsonLd.
+ */
+const FAQ = ({ locale }: { locale: Locale }) => {
+  const dict = getDictionary(locale);
+  const faqs = getFaqs(locale);
+
   return (
     <section
       id="faq"
@@ -9,13 +18,13 @@ const FAQ = () => {
     >
       <div className="mb-10">
         <p className="pirateOne uppercase tracking-[0.25em] text-xs md:text-sm text-black/60">
-          Section E · Q&amp;A Column
+          {dict.faq.sectionLabel}
         </p>
         <h2
           id="faq-headline"
           className="unifrakturmaguntia text-5xl md:text-6xl lg:text-7xl leading-none mt-2"
         >
-          Frequently asked.
+          {dict.faq.heading}
         </h2>
       </div>
       <div className="border-t-2 border-black/80">

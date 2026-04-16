@@ -1,14 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getFeaturedProjects } from "@/content/projects";
+import { withLocale } from "@/content/site";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionary";
 
 /**
  * "Feature articles". The landing page's selected-work section. Each card
  * is a newspaper feature column that links to the full case study at
- * /work/[slug].
+ * /[locale]/work/[slug].
  */
-const WorkTeaser = () => {
-  const featured = getFeaturedProjects(3);
+const WorkTeaser = ({ locale }: { locale: Locale }) => {
+  const dict = getDictionary(locale);
+  const featured = getFeaturedProjects(locale, 3);
 
   return (
     <section
@@ -19,20 +23,20 @@ const WorkTeaser = () => {
       <div className="flex items-end justify-between gap-4 mb-8 flex-wrap">
         <div>
           <p className="pirateOne uppercase tracking-[0.25em] text-xs md:text-sm text-black/60">
-            Section A · Features
+            {dict.work.sectionLabel}
           </p>
           <h2
             id="work-headline"
             className="unifrakturmaguntia text-5xl md:text-6xl lg:text-7xl leading-none mt-2"
           >
-            Selected work.
+            {dict.work.heading}
           </h2>
         </div>
         <Link
-          href="/work"
+          href={withLocale("/work", locale)}
           className="pirateOne text-base md:text-lg border-b-2 border-black hover:border-red-500 hover:text-red-500 pb-0.5 transition-colors"
         >
-          See full archive →
+          {dict.work.seeArchive}
         </Link>
       </div>
 
@@ -54,7 +58,10 @@ const WorkTeaser = () => {
               <span>{project.year}</span>
             </div>
 
-            <Link href={`/work/${project.slug}`} className="group block">
+            <Link
+              href={withLocale(`/work/${project.slug}`, locale)}
+              className="group block"
+            >
               <div className="relative overflow-hidden border border-black/20 bg-black">
                 <Image
                   src={project.image}
@@ -84,10 +91,10 @@ const WorkTeaser = () => {
 
             <div className="mt-6 pt-5 border-t border-black/20 flex items-center justify-between">
               <Link
-                href={`/work/${project.slug}`}
+                href={withLocale(`/work/${project.slug}`, locale)}
                 className="pirateOne text-sm md:text-base border-b-2 border-black hover:border-red-500 hover:text-red-500 pb-0.5 transition-colors"
               >
-                Read case study →
+                {dict.work.readCaseStudy}
               </Link>
               {project.liveUrl && (
                 <a
@@ -96,7 +103,7 @@ const WorkTeaser = () => {
                   rel="noreferrer"
                   className="text-xs uppercase tracking-widest text-black/60 hover:text-red-500"
                 >
-                  Live ↗
+                  {dict.work.live}
                 </a>
               )}
             </div>

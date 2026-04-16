@@ -1,11 +1,18 @@
 import Link from "next/link";
-import { services } from "@/content/services";
+import { getServices } from "@/content/services";
+import { withLocale } from "@/content/site";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionary";
 
 /**
  * Services laid out like newspaper "classifieds". Bordered boxes, serif
  * headlines, clear delivery/scope labels, all CTAs pointing to /contact.
  */
-const Services = () => {
+const Services = ({ locale }: { locale: Locale }) => {
+  const dict = getDictionary(locale);
+  const services = getServices(locale);
+  const contactHref = withLocale("/contact", locale);
+
   return (
     <section
       id="services"
@@ -15,18 +22,17 @@ const Services = () => {
       <div className="flex items-end justify-between gap-4 mb-8 flex-wrap">
         <div>
           <p className="pirateOne uppercase tracking-[0.25em] text-xs md:text-sm text-black/60">
-            Section B · Classifieds
+            {dict.services.sectionLabel}
           </p>
           <h2
             id="services-headline"
             className="unifrakturmaguntia text-5xl md:text-6xl lg:text-7xl leading-none mt-2"
           >
-            What I build.
+            {dict.services.heading}
           </h2>
         </div>
         <p className="max-w-md text-base md:text-lg text-balance">
-          Four ways to work together, all built, shipped, and supported by one
-          developer.
+          {dict.services.intro}
         </p>
       </div>
 
@@ -51,11 +57,12 @@ const Services = () => {
                     isFirst ? "text-red-400" : "text-black/50"
                   }`}
                 >
-                  No. 0{index + 1}
+                  {dict.services.numberPrefix}
+                  {index + 1}
                 </span>
                 {isFirst && (
                   <span className="pirateOne uppercase text-[10px] md:text-xs bg-red-500 text-white px-2 py-1 tracking-widest">
-                    Lead story
+                    {dict.services.leadStory}
                   </span>
                 )}
               </div>
@@ -93,17 +100,17 @@ const Services = () => {
                     isFirst ? "text-white/70" : "text-black/60"
                   }`}
                 >
-                  Best for: {service.bestFor}
+                  {dict.services.bestForLabel} {service.bestFor}
                 </p>
                 <Link
-                  href="/contact"
+                  href={contactHref}
                   className={`inline-flex items-center gap-2 pirateOne text-base border-b-2 pb-0.5 transition-colors ${
                     isFirst
                       ? "border-white hover:border-red-400 hover:text-red-400"
                       : "border-black hover:border-red-500 hover:text-red-500"
                   }`}
                 >
-                  Request a quote
+                  {dict.services.requestQuote}
                   <span aria-hidden>→</span>
                 </Link>
               </div>

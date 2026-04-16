@@ -1,19 +1,27 @@
-import { site } from "@/content/site";
-import { services } from "@/content/services";
-import { faqs } from "@/content/faqs";
+import { getSiteMeta, site, withLocale } from "@/content/site";
+import { getServices } from "@/content/services";
+import { getFaqs } from "@/content/faqs";
+import { localeLabels, type Locale } from "@/i18n/config";
 import JsonLd from "./JsonLd";
 
 /**
- * Global JSON-LD emitted once in the root layout. Covers the site-wide
- * Person, Organization, ProfessionalService, and FAQPage schemas so every
- * page inherits them for rich-result eligibility.
+ * Global JSON-LD emitted once per locale in the [locale] layout. Covers
+ * the site-wide Person, Organization, ProfessionalService, and FAQPage
+ * schemas so every page inherits them for rich-result eligibility.
  */
-export default function SiteJsonLd() {
+export default function SiteJsonLd({ locale }: { locale: Locale }) {
+  const meta = getSiteMeta(locale);
+  const services = getServices(locale);
+  const faqs = getFaqs(locale);
+  const localizedUrl = `${site.url}${withLocale("/", locale)}`;
+  const servicesUrl = `${site.url}${withLocale("/#services", locale)}`;
+  const contactUrl = `${site.url}${withLocale(site.contact.inquiries, locale)}`;
+
   const person = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: site.founder.name,
-    jobTitle: site.founder.role,
+    jobTitle: meta.founderRole,
     url: site.url,
     sameAs: [site.social.linkedin, site.social.github],
     worksFor: {
@@ -32,9 +40,9 @@ export default function SiteJsonLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: site.name,
-    url: site.url,
+    url: localizedUrl,
     logo: `${site.url}${site.ogImage}`,
-    description: site.description,
+    description: meta.description,
     founder: {
       "@type": "Person",
       name: site.founder.name,
@@ -44,8 +52,8 @@ export default function SiteJsonLd() {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
-      url: `${site.url}${site.contact.inquiries}`,
-      availableLanguage: ["English"],
+      url: contactUrl,
+      availableLanguage: Object.values(localeLabels),
     },
   };
 
@@ -53,8 +61,8 @@ export default function SiteJsonLd() {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: site.name,
-    url: site.url,
-    description: site.description,
+    url: localizedUrl,
+    description: meta.description,
     areaServed: "Worldwide",
     priceRange: "$$",
     provider: {
@@ -71,7 +79,7 @@ export default function SiteJsonLd() {
           "@type": "Service",
           name: service.title,
           description: service.pitch,
-          url: `${site.url}/#services`,
+          url: servicesUrl,
         },
       })),
     },
